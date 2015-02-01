@@ -1,0 +1,13 @@
+[
+{
+  "modid" : "ArmorEffect",
+  "name" : "Armor Effect Mod",
+  "version" : "$version",
+  "mcversion" : "$mcversion",
+  "url" : "",
+  "credits" : "",
+  "authorList": [
+    "intarray", "GotoLink"
+  ]
+}
+]
