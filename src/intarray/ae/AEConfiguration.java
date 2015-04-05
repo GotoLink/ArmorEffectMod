@@ -1,6 +1,6 @@
 package intarray.ae;
 
-import cpw.mods.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.potion.Potion;
@@ -52,7 +52,7 @@ public class AEConfiguration
 	 * @param id The potion id
 	 * @param strength The strength, as a String. If Integer.parseInt() throws an exception, it defaults to 1. This is the value the player sees, so it starts at 1.
 	 */
-	public void addEffect(String id, String strength)
+	public void addEffect(String id, String strength, boolean hasEffect)
 	{
 		int i;
 		try
@@ -64,7 +64,7 @@ public class AEConfiguration
 			System.out.println("Couldn't parse given text as potion strength: " + strength);
 			i = 1;
 		}
-		effects.add(new Effect(id.replace(" ", "").toLowerCase(), i - 1));
+		effects.add(new Effect(id.replace(" ", "").toLowerCase(), i - 1, hasEffect));
 	}
 	
 	private boolean matches(ItemStack[] items)
@@ -171,7 +171,7 @@ public class AEConfiguration
 		}
 		else if (item instanceof ItemHoe)
 		{
-			s = ((ItemHoe) item).getToolMaterialName();
+			s = ((ItemHoe) item).getMaterialName();
 		}
 		else if (item instanceof ItemSword)
 		{
@@ -216,7 +216,7 @@ public class AEConfiguration
 			}
 			if (item instanceof ItemHoe)
 			{
-				string = ((ItemHoe) item).getToolMaterialName();
+				string = ((ItemHoe) item).getMaterialName();
 			}
 			if (item instanceof ItemSword)
 			{
@@ -300,9 +300,10 @@ final class Effect
 	private static final int LOW_REGEN_MIN_TIME = 50;
 	private final String name;
 	private final int strength;
+	private final boolean show;
 	private int id;
 	
-	Effect(String id, int strength)
+	Effect(String id, int strength, boolean show)
 	{
 		this.name = id;
 		try{
@@ -311,6 +312,7 @@ final class Effect
 			this.id = -1;
 		}
 		this.strength = strength;
+		this.show = show;
 	}
 	
 	void apply(EntityPlayer player)
@@ -327,11 +329,11 @@ final class Effect
 		}
 		if (potion != Potion.regeneration.id)
 		{
-			player.addPotionEffect(new PotionEffect(potion, ARBITRARY_SHORT_TIME, strength, true));
+			player.addPotionEffect(new PotionEffect(potion, ARBITRARY_SHORT_TIME, strength, true, show));
 		}
 		else if (!player.isPotionActive(potion))
 		{
-			player.addPotionEffect(new PotionEffect(potion, LOW_REGEN_MIN_TIME, strength, true));
+			player.addPotionEffect(new PotionEffect(potion, LOW_REGEN_MIN_TIME, strength, true, show));
 		}
 	}
 }

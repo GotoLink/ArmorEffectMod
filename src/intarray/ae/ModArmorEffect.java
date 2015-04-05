@@ -1,12 +1,12 @@
 package intarray.ae;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.common.config.Configuration;
 
 @Mod(modid = "ArmorEffect", name = "Armor Effect Mod", version = "$version")
@@ -40,11 +40,12 @@ public final class ModArmorEffect
 			do
 			{
 				String potionID = config.get(name, "6. Potion " + i, "").getString();
-				String strength = config.get(name, "7. Strength " + i, "").getString();
 				exists = !potionID.isEmpty();
 				if (exists)
 				{
-					aec.addEffect(potionID, strength);
+					String strength = config.get(name, "7. Strength " + i, "").getString();
+					boolean show = config.getBoolean("8. Has Particles " + i, name, true, "If particles should display for this effect.");
+					aec.addEffect(potionID, strength, show);
 				}
 				i++;
 			}
