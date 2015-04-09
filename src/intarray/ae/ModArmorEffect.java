@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = "ArmorEffect", name = "Armor Effect Mod", version = "$version")
+@Mod(modid = "ArmorEffect", name = "Armor Effect Mod", version = "$version", acceptableRemoteVersions = "*")
 public final class ModArmorEffect
 {
 	private Configuration config;
